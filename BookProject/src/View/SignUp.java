@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 //import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 //import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -35,7 +36,8 @@ public class SignUp extends JFrame {
 	private JTextField txtTel;
 	private String auth = "n";
 	private int cnt = 0;
-	
+	UserDto userdto = new UserDto();
+	UserDao userdao = UserDao.getInstance();
 	/**
 	 * Launch the application.
 	 */
@@ -56,7 +58,7 @@ public class SignUp extends JFrame {
 	 * Create the frame.
 	 */
 	public SignUp() {
-		setBounds(100, 100, 400, 600);
+		setBounds(200, 250, 400, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -65,7 +67,7 @@ public class SignUp extends JFrame {
 		
 		JLabel lbTitle = new JLabel("회원가입");
 		lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lbTitle.setFont(new Font("굴림", Font.PLAIN, 25));
+		lbTitle.setFont(new Font("굴림", Font.BOLD, 30));
 		lbTitle.setBounds(100, 10, 200, 40);
 		contentPane.add(lbTitle);
 		
@@ -75,12 +77,13 @@ public class SignUp extends JFrame {
 		contentPane.add(lbId);
 		
 		txtId = new JTextField();
+		txtId.setFont(new Font("굴림", Font.PLAIN, 20));
 		txtId.setBounds(110, 100, 120, 30);
 		contentPane.add(txtId);
 		txtId.setColumns(10);
 		
 		JButton btnDpCheck = new JButton("중복검사");
-		btnDpCheck.setFont(new Font("굴림", Font.PLAIN, 14));
+		btnDpCheck.setFont(new Font("굴림", Font.PLAIN, 16));
 		btnDpCheck.setBounds(250, 100, 100, 30);
 		btnDpCheck.setEnabled(false);
 		contentPane.add(btnDpCheck);
@@ -97,7 +100,7 @@ public class SignUp extends JFrame {
 		contentPane.add(lbName);
 		
 		txtName = new JTextField();
-		txtName.setColumns(10);
+		txtName.setFont(new Font("굴림", Font.PLAIN, 20));
 		txtName.setBounds(110, 170, 120, 30);
 		contentPane.add(txtName);
 		
@@ -107,7 +110,7 @@ public class SignUp extends JFrame {
 		contentPane.add(lblNewLabel_Password);
 		
 		txtPassword = new JPasswordField();
-		txtPassword.setColumns(10);
+		txtPassword.setFont(new Font("굴림", Font.PLAIN, 20));
 		txtPassword.setBounds(110, 220, 120, 30);
 		contentPane.add(txtPassword);
 		
@@ -116,13 +119,13 @@ public class SignUp extends JFrame {
 		lblNewLabel_PwHint.setBounds(12, 270, 150, 30);
 		contentPane.add(lblNewLabel_PwHint);
 		
-		JLabel lblNewLabel_Question = new JLabel("가장 인상깊은 선생님의 성함은?");
-		lblNewLabel_Question.setFont(new Font("굴림", Font.PLAIN, 20));
-		lblNewLabel_Question.setBounds(12, 310, 300, 30);
-		contentPane.add(lblNewLabel_Question);
+		JLabel lbQuestion = new JLabel("가장 재미있는 선생님의 성함은?");
+		lbQuestion.setFont(new Font("굴림", Font.PLAIN, 20));
+		lbQuestion.setBounds(12, 310, 300, 30);
+		contentPane.add(lbQuestion);
 		
 		txtQuestion = new JTextField();
-		txtQuestion.setColumns(10);
+		txtQuestion.setFont(new Font("굴림", Font.PLAIN, 20));
 		txtQuestion.setBounds(12, 350, 300, 30);
 		contentPane.add(txtQuestion);
 		
@@ -132,8 +135,9 @@ public class SignUp extends JFrame {
 		contentPane.add(lbTel);
 		
 		txtTel = new JTextField();
+		txtTel.setFont(new Font("굴림", Font.PLAIN, 20));
 		txtTel.setColumns(10);
-		txtTel.setBounds(110, 400, 120, 30);
+		txtTel.setBounds(110, 400, 202, 30);
 		contentPane.add(txtTel);
 		
 //		JLabel lbAuthor = new JLabel("권한");
@@ -186,10 +190,10 @@ public class SignUp extends JFrame {
 		
 		btnDpCheck.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(txtId.getText().equals("98jiyong")) {
+				if(dpCheck(txtId.getText())) {
 					lbDpCheck.setText("중복된 아이디 입니다.");
 					lbDpCheck.setForeground(Color.red);
-					}else {
+				}else {
 					lbDpCheck.setText("사용가능한 아이디 입니다.");
 					lbDpCheck.setForeground(Color.blue);
 				}
@@ -199,7 +203,7 @@ public class SignUp extends JFrame {
 		lbTitle.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				cnt++;
-				if(cnt >= 10) {
+				if(cnt >= 5) {
 					auth = "y";
 				}
 			}
@@ -209,7 +213,6 @@ public class SignUp extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				UserDto userdto = new UserDto();
 				String id = txtId.getText();
 				String name = txtName.getText();
 				String pw = new String(txtPassword.getPassword());
@@ -229,11 +232,23 @@ public class SignUp extends JFrame {
 //					String auth = "n";
 //					userdto.setAuth(auth);
 //				}
-				UserDao userdao = UserDao.getInstance();
+				
 				userdao.insert(userdto);
-				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				
+//				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				setVisible(false);
 			}
 		});
 		
+	}
+	
+	private boolean dpCheck(String checkId) {
+		ArrayList<UserDto> ulist = userdao.selectAll();
+		for(UserDto tempu : ulist) {
+			if(checkId.equals(tempu.getId())){
+				return true;
+			}
+		}
+		return false;
 	}
 }

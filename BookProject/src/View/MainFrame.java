@@ -42,59 +42,65 @@ public MainFrame() {
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("도서관리 프로그램\r\n");
-		lblNewLabel.setBounds(85, 60, 430, 80);
+		lblNewLabel.setBounds(85, 30, 430, 80);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setIcon(new ImageIcon(MainFrame.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
-		lblNewLabel.setFont(new Font("굴림", Font.PLAIN, 40));
+		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 40));
 		getContentPane().add(lblNewLabel);
 		
 		JButton btnUser = new JButton("사용자");
-		btnUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Login_User lgUser = new Login_User();
-				lgUser.setVisible(true);
-				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			}
-		});
 		btnUser.setFont(new Font("굴림", Font.PLAIN, 30));
-		btnUser.setBounds(120, 150, 150, 120);
+		btnUser.setBounds(120, 120, 150, 120);
 		getContentPane().add(btnUser);
 		
 		
 		JButton btnAdmin = new JButton("관리자");
+		btnAdmin.setFont(new Font("굴림", Font.PLAIN, 30));
+		btnAdmin.setBounds(330, 120, 150, 120);
+		getContentPane().add(btnAdmin);
+		
+		JButton btnSignup = new JButton("회원가입");
+		btnSignup.setFont(new Font("굴림", Font.PLAIN, 17));
+		btnSignup.setBounds(120, 270, 100, 40);
+		getContentPane().add(btnSignup);
+		
+		JButton btnFindId = new JButton("ID 찾기");
+		btnFindId.setFont(new Font("굴림", Font.PLAIN, 17));
+		btnFindId.setBounds(250, 270, 100, 40);
+		getContentPane().add(btnFindId);
+		
+		JButton btnFindPw = new JButton("PW 찾기");
+		btnFindPw.setFont(new Font("굴림", Font.PLAIN, 17));
+		btnFindPw.setBounds(380, 270, 100, 40);
+		getContentPane().add(btnFindPw);
+		
+		btnUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Login_User lgUser = new Login_User();
+				lgUser.setVisible(true);
+			}
+		});
+		
 		btnAdmin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Login_Admin lgAdmin = new Login_Admin();
 				lgAdmin.setVisible(true);
-				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			}
 		});
-		btnAdmin.setFont(new Font("굴림", Font.PLAIN, 30));
-		btnAdmin.setBounds(330, 150, 150, 120);
-		getContentPane().add(btnAdmin);
 		
-		JButton btnSignup = new JButton("회원가입");
-		btnSignup.setFont(new Font("굴림", Font.PLAIN, 15));
-		btnSignup.setBounds(120, 300, 100, 40);
+
 		btnSignup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SignUp s = new SignUp();
 				s.setVisible(true);
 			}
 		});
-		getContentPane().add(btnSignup);
 		
-		JButton btnFindId = new JButton("ID찾기");
-		btnFindId.setFont(new Font("굴림", Font.PLAIN, 15));
-		btnFindId.setBounds(250, 300, 100, 40);
-		getContentPane().add(btnFindId);
-		
-		JButton btnFindPw = new JButton("PW찾기");
-		btnFindPw.setFont(new Font("굴림", Font.PLAIN, 15));
-		btnFindPw.setBounds(380, 300, 100, 40);
-		getContentPane().add(btnFindPw);
-		
-		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		btnFindId.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Find_Id fId = new Find_Id();
+				fId.setVisible(true);
+			}
+		});
 	}
 }
