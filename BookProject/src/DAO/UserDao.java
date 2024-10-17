@@ -70,9 +70,7 @@ public class UserDao {
 				pstmt.setString(1, name);
 				pstmt.setString(2, tel);
 				rs = pstmt.executeQuery();
-				// ResultSet은 테이블 형식으로 가져온다고 이해합니다.
-				while(rs.next()) {	// next()메서드는 rs에서 참조하는 테이블에서
-									// 튜플을 순차적으로 하나씩 접근하는 메서드
+				while(rs.next()) {
 					String userId = null;
 					userId = rs.getString("id");
 					return userId;
@@ -98,9 +96,7 @@ public class UserDao {
 				pstmt.setString(1, id);
 				pstmt.setString(2, pwhint);
 				rs = pstmt.executeQuery();
-				// ResultSet은 테이블 형식으로 가져온다고 이해합니다.
-				while(rs.next()) {	// next()메서드는 rs에서 참조하는 테이블에서
-									// 튜플을 순차적으로 하나씩 접근하는 메서드
+				while(rs.next()) {	
 					String userPw = null;
 					userPw = rs.getString("pw");
 					return userPw;
@@ -118,6 +114,34 @@ public class UserDao {
 		}
 		return null;
 	}
+	public void resetPW(String resetPw, String id) {
+		if((conn = DBCN.conn()) != null) {
+			try {
+				String sql = "update account set pw = ? where id = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, resetPw);
+				pstmt.setString(2, id);
+				// 쿼리 실행
+				int result = pstmt.executeUpdate();
+				if(result == 0) {
+					conn.rollback();
+					System.out.println("결과에 의해 롤백 완료");
+				}else {
+					conn.commit();
+					System.out.println("결과에 의해 커밋 완료");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try {
+					DBCL.close();
+				}catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}
+	}
 	public ArrayList<UserDto> selectAll(){
 		ArrayList<UserDto> ulist = new ArrayList<UserDto>();
 		if((conn = DBCN.conn()) != null) {
@@ -125,9 +149,7 @@ public class UserDao {
 				String sql = "select * from account";
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
-				// ResultSet은 테이블 형식으로 가져온다고 이해합니다.
-				while(rs.next()) {	// next()메서드는 rs에서 참조하는 테이블에서
-									// 튜플을 순차적으로 하나씩 접근하는 메서드
+				while(rs.next()) {	
 					UserDto userTemp = new UserDto();
 					userTemp.setId(rs.getString("id"));
 					userTemp.setName(rs.getString("name"));

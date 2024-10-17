@@ -119,9 +119,9 @@ public class SignUp extends JFrame {
 		lblNewLabel_PwHint.setBounds(12, 270, 150, 30);
 		contentPane.add(lblNewLabel_PwHint);
 		
-		JLabel lbQuestion = new JLabel("가장 재미있는 선생님의 성함은?");
+		JLabel lbQuestion = new JLabel("가장 재미있었던 선생님의 성함은?");
 		lbQuestion.setFont(new Font("굴림", Font.PLAIN, 20));
-		lbQuestion.setBounds(12, 310, 300, 30);
+		lbQuestion.setBounds(12, 310, 320, 30);
 		contentPane.add(lbQuestion);
 		
 		txtQuestion = new JTextField();
@@ -235,8 +235,9 @@ public class SignUp extends JFrame {
 				
 				userdao.insert(userdto);
 				
-//				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				setVisible(false);
+				Alarm_Success complete = new Alarm_Success();
+				complete.setVisible(true);
 			}
 		});
 		

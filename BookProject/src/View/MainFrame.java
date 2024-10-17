@@ -102,5 +102,11 @@ public MainFrame() {
 				fId.setVisible(true);
 			}
 		});
+		btnFindPw.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Find_Pw fPw = new Find_Pw();
+				fPw.setVisible(true);
+			}
+		});
 	}
 }

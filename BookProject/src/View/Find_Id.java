@@ -45,16 +45,16 @@ public class Find_Id extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("ID 찾기");
-		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 30));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(125, 20, 150, 40);
-		contentPane.add(lblNewLabel);
+		JLabel lbTitle = new JLabel("ID 찾기");
+		lbTitle.setFont(new Font("굴림", Font.BOLD, 30));
+		lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lbTitle.setBounds(125, 20, 150, 40);
+		contentPane.add(lbTitle);
 		
-		JLabel lblName = new JLabel("이름");
-		lblName.setFont(new Font("굴림", Font.PLAIN, 20));
-		lblName.setBounds(70, 90, 100, 30);
-		contentPane.add(lblName);
+		JLabel lbName = new JLabel("이름");
+		lbName.setFont(new Font("굴림", Font.PLAIN, 20));
+		lbName.setBounds(70, 90, 100, 30);
+		contentPane.add(lbName);
 		
 		JTextField txtName = new JTextField(); 
 		txtName.setFont(new Font("굴림", Font.PLAIN, 20));
