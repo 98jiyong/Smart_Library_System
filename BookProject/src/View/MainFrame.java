@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	public static MainFrame mf = null;
 	/**
 	 * @wbp.nonvisual location=80,349
 	 */
@@ -37,7 +38,15 @@ public class MainFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-public MainFrame() {
+	
+	public static MainFrame getInstance() {
+		if(mf == null) {
+			mf = new MainFrame();
+		}
+		return mf;
+	}
+	
+	private MainFrame() {
 		setBounds(300, 250, 600, 400);
 		getContentPane().setLayout(null);
 		
@@ -52,7 +61,6 @@ public MainFrame() {
 		btnUser.setFont(new Font("굴림", Font.PLAIN, 30));
 		btnUser.setBounds(120, 120, 150, 120);
 		getContentPane().add(btnUser);
-		
 		
 		JButton btnAdmin = new JButton("관리자");
 		btnAdmin.setFont(new Font("굴림", Font.PLAIN, 30));

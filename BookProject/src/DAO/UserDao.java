@@ -52,6 +52,18 @@ public class UserDao {
 		return false;
 	}
 	
+	public boolean isAuth(String id) {
+		ArrayList<UserDto> ulist = userdao.selectAll();
+		for(UserDto tempu : ulist) {
+			if(id.equals(tempu.getId())){
+				if(tempu.getAuth().equals("y")) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public void insert(UserDto udto) {
 		if(conn != null) {
 			try {

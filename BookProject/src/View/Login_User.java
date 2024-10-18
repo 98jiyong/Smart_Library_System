@@ -22,6 +22,7 @@ public class Login_User extends JFrame {
 	private JTextField txtId;
 	private JPasswordField passwordPw;
 	UserDao userdao = UserDao.getInstance();
+	MainFrame mf = MainFrame.getInstance();
 	/**
 	 * Launch the application.
 	 */
@@ -89,6 +90,7 @@ public class Login_User extends JFrame {
 						Notice_Success ntcscs = Notice_Success.getInstance();
 						ntcscs.setVisible(true);
 						setVisible(false);
+						mf.setVisible(false);
 					}else {
 						Notice_Failed_Pw ntcFailPw = Notice_Failed_Pw.getInstance();
 						ntcFailPw.setVisible(true);
