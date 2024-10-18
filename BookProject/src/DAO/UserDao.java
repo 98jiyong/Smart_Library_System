@@ -14,13 +14,15 @@ public class UserDao {
 	
 	DBConnection DBCN = DBConnection.getInstance();
 	DBClose DBCL = DBClose.getInstance();
-	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	public static UserDao userdao = null;
+	private String userId = null;
+	private Connection conn = null;
 	
 	private UserDao() {
 		DBCN.init();
+		conn = DBCN.conn();
 	}
 	
 	public static UserDao getInstance() {
@@ -30,8 +32,28 @@ public class UserDao {
 		return userdao;
 	}
 	
+	public boolean isinId(String id) {
+		ArrayList<UserDto> ulist = userdao.selectAll();
+		for(UserDto tempu : ulist) {
+			if(id.equals(tempu.getId())){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isinPw(String pw) {
+		ArrayList<UserDto> ulist = userdao.selectAll();
+		for(UserDto tempu : ulist) {
+			if(pw.equals(tempu.getId())){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void insert(UserDto udto) {
-		if((conn = DBCN.conn()) != null) {
+		if(conn != null) {
 			try {
 				String sql = "insert into account values (?,?,?,?,?,?)";
 				pstmt = conn.prepareStatement(sql);
@@ -63,7 +85,7 @@ public class UserDao {
 		}
 	}
 	public String findID(String name, String tel) {
-		if((conn = DBCN.conn()) != null) {
+		if(conn != null) {
 			try {
 				String sql = "select id from account where name = ? and tel = ?";
 				pstmt = conn.prepareStatement(sql);
@@ -71,7 +93,6 @@ public class UserDao {
 				pstmt.setString(2, tel);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
-					String userId = null;
 					userId = rs.getString("id");
 					return userId;
 				}
@@ -88,9 +109,38 @@ public class UserDao {
 		}
 		return null;
 	}
-	public String findPW(String id, String pwhint) {
-		if((conn = DBCN.conn()) != null) {
+	
+	public String findPW(String id) {
+		if(conn != null) {
 			try {
+				userId = id;
+				String sql = "select pw from account where id = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {	
+					String userPw = null;
+					userPw = rs.getString("pw");
+					return userPw;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try {
+					DBCL.close();
+				}catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}
+		return null;
+	}
+	
+	public String findPW(String id, String pwhint) {
+		if(conn != null) {
+			try {
+				userId = id;
 				String sql = "select pw from account where id = ? and pwhint = ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, id);
@@ -114,13 +164,14 @@ public class UserDao {
 		}
 		return null;
 	}
-	public void resetPW(String resetPw, String id) {
-		if((conn = DBCN.conn()) != null) {
+	
+	public void updatePW(String resetPw) {
+		if(conn != null) {
 			try {
 				String sql = "update account set pw = ? where id = ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, resetPw);
-				pstmt.setString(2, id);
+				pstmt.setString(2, userId);
 				// 쿼리 실행
 				int result = pstmt.executeUpdate();
 				if(result == 0) {
@@ -144,7 +195,7 @@ public class UserDao {
 	}
 	public ArrayList<UserDto> selectAll(){
 		ArrayList<UserDto> ulist = new ArrayList<UserDto>();
-		if((conn = DBCN.conn()) != null) {
+		if(conn != null) {
 			try {
 				String sql = "select * from account";
 				pstmt = conn.prepareStatement(sql);

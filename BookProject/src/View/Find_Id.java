@@ -90,6 +90,7 @@ public class Find_Id extends JFrame {
 		btnFind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Result_Id rId = new Result_Id(txtName.getText(), txtTel.getText());
+				setVisible(false);
 				rId.setVisible(true);
 			}
 		});

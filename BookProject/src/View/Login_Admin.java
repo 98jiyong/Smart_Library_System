@@ -1,24 +1,27 @@
 package View;
 
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import DAO.UserDao;
 
 public class Login_Admin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField_1;
-	private JPasswordField passwordField;
-
+	private JTextField txtId;
+	private JPasswordField passwordPw;
+	UserDao userdao = UserDao.getInstance();
 	/**
 	 * Launch the application.
 	 */
@@ -39,39 +42,62 @@ public class Login_Admin extends JFrame {
 	 * Create the frame.
 	 */
 	public Login_Admin() {
-		setBounds(800, 400, 300, 200);
+		setBounds(400, 300, 400, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("관리자 로그인");
-		lblNewLabel.setFont(new Font("굴림", Font.PLAIN, 16));
-		lblNewLabel.setBounds(12, 10, 260, 15);
-		contentPane.add(lblNewLabel);
+		JLabel lbTitle = new JLabel("관리자 로그인");
+		lbTitle.setFont(new Font("굴림", Font.BOLD, 30));
+		lbTitle.setBounds(90, 30, 220, 30);
+		contentPane.add(lbTitle);
 		
-		JLabel lblNewLabel_1 = new JLabel("ID");
-		lblNewLabel_1.setFont(new Font("굴림", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(12, 55, 26, 15);
-		contentPane.add(lblNewLabel_1);
+		JLabel lbId = new JLabel("ID");
+		lbId.setFont(new Font("굴림", Font.PLAIN, 20));
+		lbId.setBounds(90, 90, 30, 30);
+		contentPane.add(lbId);
 		
-		JLabel lblNewLabel_2 = new JLabel("PW");
-		lblNewLabel_2.setFont(new Font("굴림", Font.PLAIN, 16));
-		lblNewLabel_2.setBounds(12, 100, 26, 21);
-		contentPane.add(lblNewLabel_2);
+		txtId = new JTextField();
+		txtId.setFont(new Font("굴림", Font.PLAIN, 20));
+		txtId.setBounds(140, 90, 150, 30);
+		contentPane.add(txtId);
+		txtId.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(70, 55, 116, 21);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		JLabel lbPw = new JLabel("PW");
+		lbPw.setFont(new Font("굴림", Font.PLAIN, 20));
+		lbPw.setBounds(90, 140, 30, 30);
+		contentPane.add(lbPw);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(70, 100, 116, 21);
-		contentPane.add(passwordField);
+		passwordPw = new JPasswordField();
+		passwordPw.setFont(new Font("굴림", Font.PLAIN, 20));
+		passwordPw.setBounds(140, 140, 150, 30);
+		contentPane.add(passwordPw);
 		
-		JButton btnNewButton = new JButton("Login");
-		btnNewButton.setBounds(198, 58, 74, 60);
-		contentPane.add(btnNewButton);
+		JButton btnLogin = new JButton("로그인");
+		btnLogin.setFont(new Font("굴림", Font.BOLD, 30));
+		btnLogin.setBounds(90, 200, 200, 40);
+		contentPane.add(btnLogin);
+		
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(userdao.isinId(txtId.getText())) {
+					String userPw = userdao.findPW(txtId.getText());
+					if(new String(passwordPw.getPassword()).equals(userPw)) {
+						Notice_Success ntcscs = Notice_Success.getInstance();
+						ntcscs.setVisible(true);
+						setVisible(false);
+					}else {
+						Notice_Failed_Pw ntcFailPw = Notice_Failed_Pw.getInstance();
+						ntcFailPw.setVisible(true);
+					}
+				}else {
+					Notice_Failed_Id ntcFailId = Notice_Failed_Id.getInstance();
+					ntcFailId.setVisible(true);
+				}
+			}
+		});
+		
 	}
 }

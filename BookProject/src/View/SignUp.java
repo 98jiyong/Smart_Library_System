@@ -9,7 +9,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 //import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 //import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -58,7 +57,7 @@ public class SignUp extends JFrame {
 	 * Create the frame.
 	 */
 	public SignUp() {
-		setBounds(200, 250, 400, 600);
+		setBounds(400, 250, 400, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -190,7 +189,7 @@ public class SignUp extends JFrame {
 		
 		btnDpCheck.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(dpCheck(txtId.getText())) {
+				if(userdao.isinId(txtId.getText())) {
 					lbDpCheck.setText("중복된 아이디 입니다.");
 					lbDpCheck.setForeground(Color.red);
 				}else {
@@ -236,20 +235,20 @@ public class SignUp extends JFrame {
 				userdao.insert(userdto);
 				
 				setVisible(false);
-				Alarm_Success complete = new Alarm_Success();
-				complete.setVisible(true);
+				Notice_Success ntcscs = Notice_Success.getInstance();
+				ntcscs.setVisible(true);
 			}
 		});
 		
 	}
 	
-	private boolean dpCheck(String checkId) {
-		ArrayList<UserDto> ulist = userdao.selectAll();
-		for(UserDto tempu : ulist) {
-			if(checkId.equals(tempu.getId())){
-				return true;
-			}
-		}
-		return false;
-	}
+//	private boolean dpCheck(String checkId) {
+//		ArrayList<UserDto> ulist = userdao.selectAll();
+//		for(UserDto tempu : ulist) {
+//			if(checkId.equals(tempu.getId())){
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 }

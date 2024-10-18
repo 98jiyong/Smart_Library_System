@@ -121,7 +121,10 @@ public class Reset_Pw extends JFrame {
 		
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				userdao.resetPW(new String (ResetPwCheck.getPassword()),"meow");
+				userdao.updatePW(new String (ResetPwCheck.getPassword()));
+				setVisible(false);
+				Notice_Success ntcscs = Notice_Success.getInstance();
+				ntcscs.setVisible(true);
 			}
 		});
 	}

@@ -49,7 +49,7 @@ public class Find_Pw extends JFrame {
 		JLabel lbTitle = new JLabel("PW 찾기");
 		lbTitle.setFont(new Font("굴림", Font.BOLD, 30));
 		lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lbTitle.setBounds(125, 20, 150, 40);
+		lbTitle.setBounds(115, 20, 150, 40);
 		contentPane.add(lbTitle);
 		
 		JLabel lbId = new JLabel("ID");
@@ -103,6 +103,7 @@ public class Find_Pw extends JFrame {
 				String userPw = userdao.findPW(txtId.getText(), txtQuestionAnswer.getText());
 				if(userPw != null) {
 					Reset_Pw rPw = new Reset_Pw();
+					setVisible(false);
 					rPw.setVisible(true);
 				}else {
 					No_Pw nPw = new No_Pw(txtId.getText(), txtQuestionAnswer.getText());
@@ -110,6 +111,7 @@ public class Find_Pw extends JFrame {
 				}
 			}
 		});
+		
 		
 	}
 }
