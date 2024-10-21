@@ -43,7 +43,7 @@ public class Reset_Pw extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Reset_Pw() {
+	public Reset_Pw(String id) {
 		setBounds(400, 300, 400, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -121,7 +121,7 @@ public class Reset_Pw extends JFrame {
 		
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				userdao.updatePW(new String (ResetPwCheck.getPassword()));
+				userdao.updatePW(new String (ResetPwCheck.getPassword()), id);
 				setVisible(false);
 				Notice_Success ntcscs = Notice_Success.getInstance();
 				ntcscs.setVisible(true);

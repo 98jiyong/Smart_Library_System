@@ -15,6 +15,7 @@ public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	public static MainFrame mf = null;
+	
 	/**
 	 * @wbp.nonvisual location=80,349
 	 */
@@ -84,7 +85,7 @@ public class MainFrame extends JFrame {
 		
 		btnUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login_User lgUser = new Login_User();
+				Login_User lgUser = Login_User.getInstance();
 				lgUser.setVisible(true);
 			}
 		});
@@ -92,6 +93,7 @@ public class MainFrame extends JFrame {
 		btnAdmin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Login_Admin lgAdmin = new Login_Admin();
+				
 				lgAdmin.setVisible(true);
 			}
 		});

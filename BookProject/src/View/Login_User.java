@@ -23,6 +23,7 @@ public class Login_User extends JFrame {
 	private JPasswordField passwordPw;
 	UserDao userdao = UserDao.getInstance();
 	MainFrame mf = MainFrame.getInstance();
+	public static Login_User lgUser = null;
 	/**
 	 * Launch the application.
 	 */
@@ -39,10 +40,16 @@ public class Login_User extends JFrame {
 //		});
 //	}
 
+	public static Login_User getInstance() {
+		if(lgUser == null) {
+			lgUser = new Login_User();
+		}
+		return lgUser;
+	}
 	/**
 	 * Create the frame.
 	 */
-	public Login_User() {
+	private Login_User() {
 		setBounds(400, 300, 400, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -87,10 +94,12 @@ public class Login_User extends JFrame {
 				if(userdao.isinId(txtId.getText())) {
 					String userPw = userdao.findPW(txtId.getText());
 					if(new String(passwordPw.getPassword()).equals(userPw)) {
-						Notice_Success ntcscs = Notice_Success.getInstance();
-						ntcscs.setVisible(true);
 						setVisible(false);
 						mf.setVisible(false);
+						Notice_Success ntcscs = Notice_Success.getInstance();
+						UserSelectFrame us = new UserSelectFrame(txtId.getText());
+						us.setVisible(true);
+						ntcscs.setVisible(true);
 					}else {
 						Notice_Failed_Pw ntcFailPw = Notice_Failed_Pw.getInstance();
 						ntcFailPw.setVisible(true);

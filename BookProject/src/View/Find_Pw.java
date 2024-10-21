@@ -102,7 +102,7 @@ public class Find_Pw extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String userPw = userdao.findPW(txtId.getText(), txtQuestionAnswer.getText());
 				if(userPw != null) {
-					Reset_Pw rPw = new Reset_Pw();
+					Reset_Pw rPw = new Reset_Pw(txtId.getText());
 					setVisible(false);
 					rPw.setVisible(true);
 				}else {

@@ -177,13 +177,13 @@ public class UserDao {
 		return null;
 	}
 	
-	public void updatePW(String resetPw) {
+	public void updatePW(String resetPw, String id) {
 		if(conn != null) {
 			try {
 				String sql = "update account set pw = ? where id = ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, resetPw);
-				pstmt.setString(2, userId);
+				pstmt.setString(2, id);
 				// 쿼리 실행
 				int result = pstmt.executeUpdate();
 				if(result == 0) {
