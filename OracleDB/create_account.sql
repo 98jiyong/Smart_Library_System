@@ -13,6 +13,13 @@ writer varchar2(20) not null,
 category varchar2(10) not null,
 bookcnt NUMBER(2) not null);
 
+create table loanlist(
+isbn varchar2(20) not null,
+title varchar2(20) not null,
+writer varchar2(20) not null,
+category varchar2(10) not null,
+id varchar2(20) not null);
+
 insert into book values ('12345','하울의 움직이는 성','무라카미 하루키','소설','2');
 insert into book values ('12346','하울의 움직이는 성','무라카미 하루키','소설','2');
 insert into book values ('12347','하울의 움직이는 성','무라카미 하루키','소설','2');
@@ -21,9 +28,12 @@ insert into book values ('12349','하울의 움직이는 성','무라카미 하루키','소설','
 insert into book values ('12350','하울의 움직이는 성','무라카미 하루키','소설','2');
 
 select * from account;
+select * from loanlist;
 select * from book;
 
-delete from account where id = 'lucky';
+delete loanlist;
+
+delete from account where id = 'asd';
 update account set pwhint = '김철기' where id = 'abc123';
 
 commit;

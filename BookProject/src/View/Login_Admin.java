@@ -87,8 +87,6 @@ public class Login_Admin extends JFrame {
 					String userPw = userdao.findPW(txtId.getText());
 					if(new String(passwordPw.getPassword()).equals(userPw)) {
 						if(userdao.isAuth(txtId.getText())) {
-							Notice_Success ntcscs = Notice_Success.getInstance();
-							ntcscs.setVisible(true);
 							setVisible(false);
 							mf.setVisible(false);
 						}else {

@@ -93,7 +93,6 @@ public class MainFrame extends JFrame {
 		btnAdmin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Login_Admin lgAdmin = new Login_Admin();
-				
 				lgAdmin.setVisible(true);
 			}
 		});

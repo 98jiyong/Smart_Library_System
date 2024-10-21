@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,11 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class UserSelectFrame extends JFrame {
+public class UserSelect extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
+	public static UserSelect us = null;
+	MainFrame mf = MainFrame.getInstance();
 	/**
 	 * Launch the application.
 	 */
@@ -21,7 +23,7 @@ public class UserSelectFrame extends JFrame {
 //		EventQueue.invokeLater(new Runnable() {
 //			public void run() {
 //				try {
-//					UserSelectFrame frame = new UserSelectFrame();
+//					UserSelect frame = UserSelect.getInstance(null);
 //					frame.setVisible(true);
 //				} catch (Exception e) {
 //					e.printStackTrace();
@@ -29,11 +31,19 @@ public class UserSelectFrame extends JFrame {
 //			}
 //		});
 //	}
-
+	
+	public static UserSelect getInstance(String id) {
+		if(us == null) {
+			us = new UserSelect(id);
+		}
+		return us;
+	}
+	
 	/**
 	 * Create the frame.
 	 */
-	public UserSelectFrame(String id) {
+
+	private UserSelect(String id) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 300, 400, 300);
 		contentPane = new JPanel();
@@ -44,21 +54,32 @@ public class UserSelectFrame extends JFrame {
 		
 		JButton btnLoan = new JButton("대출");
 		btnLoan.setFont(new Font("굴림", Font.BOLD, 30));
-		btnLoan.setBounds(50, 70, 120, 100);
+		btnLoan.setBounds(50, 75, 120, 100);
 		contentPane.add(btnLoan);
 		
 		JButton btnReturn = new JButton("반납");
 		btnReturn.setFont(new Font("굴림", Font.BOLD, 30));
-		btnReturn.setBounds(220, 70, 120, 100);
+		btnReturn.setBounds(220, 75, 120, 100);
 		contentPane.add(btnReturn);
 		
 		btnLoan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Loan l = new Loan(id);
-				l.setVisible(true);
+				CheckOut chOut = new CheckOut(id);
+				chOut.setVisible(true);
 				setVisible(false);
 			}
 		});
 		
+		btnReturn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CheckIn chIn = new CheckIn(id);
+				chIn.setVisible(true);
+				setVisible(false);
+			}
+		});
+		
+		
+		
 	}
+	
 }

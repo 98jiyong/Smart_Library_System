@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -96,13 +97,12 @@ public class Login_User extends JFrame {
 					if(new String(passwordPw.getPassword()).equals(userPw)) {
 						setVisible(false);
 						mf.setVisible(false);
-						Notice_Success ntcscs = Notice_Success.getInstance();
-						UserSelectFrame us = new UserSelectFrame(txtId.getText());
+						UserSelect us = UserSelect.getInstance(txtId.getText());
 						us.setVisible(true);
-						ntcscs.setVisible(true);
 					}else {
-						Notice_Failed_Pw ntcFailPw = Notice_Failed_Pw.getInstance();
-						ntcFailPw.setVisible(true);
+						JOptionPane.showMessageDialog(null, "아이디 중복 체크를 진행해주세요.","아이디 체크",JOptionPane.WARNING_MESSAGE);
+//						Notice_Failed_Pw ntcFailPw = Notice_Failed_Pw.getInstance();
+//						ntcFailPw.setVisible(true);
 					}
 				}else {
 					Notice_Failed_Id ntcFailId = Notice_Failed_Id.getInstance();

@@ -17,19 +17,19 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import DAO.BookDao;
+import DAO.LoanDao;
 import DAO.UserDao;
-import DTO.BookDto;
+import DTO.LoanDto;
 import DTO.UserDto;
 
-public class Loan extends JFrame {
+public class CheckIn extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtSearch;
-	BookDao bookdao = BookDao.getInstance();
-	UserDao userdao = UserDao.getInstance();
 	UserDto userdto = new UserDto();
+	UserDao userdao = UserDao.getInstance();
+	LoanDao loandao = LoanDao.getInstance();
 	Login_User lgUser = Login_User.getInstance();
 	/**
 	 * Launch the application.
@@ -50,24 +50,24 @@ public class Loan extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Loan(String id) {
+	public CheckIn(String id) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(350, 300, 600, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		String[] header = {"고유번호","제목","저자","분야","권수"};
+		String[] header = {"고유번호","제목","저자","분야"};
 		DefaultTableModel dtm = new DefaultTableModel(header, 0);
 		
-		ArrayList<BookDto> booklist = bookdao.selectAll();
-	    for (BookDto b : booklist) {
+		ArrayList<LoanDto> loanlist = loandao.selectAll(id);
+	    for (LoanDto l : loanlist) {
 	        Object[] rowData = {
-	            b.getIsbn(),
-	            b.getTitle(),
-	            b.getWriter(),
-	            b.getCategory(),
-	            b.getBookcnt()
+	            l.getIsbn(),
+	            l.getTitle(),
+	            l.getWriter(),
+	            l.getCategory(),
+	            l.getId()
 	        };
 	        dtm.addRow(rowData);
 	    }
@@ -78,20 +78,18 @@ public class Loan extends JFrame {
 		scrollPane.setBounds(40, 80, 500, 200);
 		TableColumn isbnColumn = table.getColumnModel().getColumn(0);
 		TableColumn titleColumn = table.getColumnModel().getColumn(1);
-		TableColumn publisherColumn = table.getColumnModel().getColumn(2);
+		TableColumn writerColumn = table.getColumnModel().getColumn(2);
 		TableColumn categoryColumn = table.getColumnModel().getColumn(3); 
-		TableColumn cntColumn = table.getColumnModel().getColumn(4);
 		isbnColumn.setPreferredWidth(70);
         titleColumn.setPreferredWidth(200);
-        publisherColumn.setPreferredWidth(100);
+        writerColumn.setPreferredWidth(100);
         categoryColumn.setPreferredWidth(50);
-        cntColumn.setPreferredWidth(30);
         contentPane.setLayout(null);
         contentPane.add(scrollPane);
         
         JLabel lbTitle = new JLabel(id +  "님 환영합니다.");
         lbTitle.setFont(new Font("굴림", Font.PLAIN, 20));
-        lbTitle.setBounds(40, 10, 200, 30);
+        lbTitle.setBounds(40, 10, 300, 30);
         contentPane.add(lbTitle);
         
         JButton btnClose = new JButton("닫기");
@@ -99,10 +97,10 @@ public class Loan extends JFrame {
         btnClose.setBounds(320, 300, 100, 40);
         contentPane.add(btnClose);
        
-        JButton btnLoan = new JButton("대출");
-        btnLoan.setFont(new Font("굴림", Font.PLAIN, 25));
-        btnLoan.setBounds(440, 300, 100, 40);
-        contentPane.add(btnLoan);
+        JButton btnReturn = new JButton("반납");
+        btnReturn.setFont(new Font("굴림", Font.PLAIN, 25));
+        btnReturn.setBounds(440, 300, 100, 40);
+        contentPane.add(btnReturn);
         
         JLabel lbSearch = new JLabel("검색어");
         lbSearch.setFont(new Font("굴림", Font.PLAIN, 20));
@@ -123,6 +121,8 @@ public class Loan extends JFrame {
         btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
+				UserSelect us = UserSelect.getInstance(id);
+				us.setVisible(true);
 			}
 		});
 		
