@@ -80,10 +80,10 @@ public class CheckIn extends JFrame {
 		TableColumn titleColumn = table.getColumnModel().getColumn(1);
 		TableColumn writerColumn = table.getColumnModel().getColumn(2);
 		TableColumn categoryColumn = table.getColumnModel().getColumn(3); 
-		isbnColumn.setPreferredWidth(70);
-        titleColumn.setPreferredWidth(200);
+		isbnColumn.setPreferredWidth(100);
+        titleColumn.setPreferredWidth(250);
         writerColumn.setPreferredWidth(100);
-        categoryColumn.setPreferredWidth(50);
+        categoryColumn.setPreferredWidth(70);
         contentPane.setLayout(null);
         contentPane.add(scrollPane);
         

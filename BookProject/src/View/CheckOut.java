@@ -90,11 +90,11 @@ public class CheckOut extends JFrame {
 		TableColumn writerColumn = table.getColumnModel().getColumn(2);
 		TableColumn categoryColumn = table.getColumnModel().getColumn(3); 
 		TableColumn cntColumn = table.getColumnModel().getColumn(4);
-		isbnColumn.setPreferredWidth(70);
-        titleColumn.setPreferredWidth(200);
-        writerColumn.setPreferredWidth(100);
+		isbnColumn.setPreferredWidth(100);
+        titleColumn.setPreferredWidth(250);
+        writerColumn.setPreferredWidth(70);
         categoryColumn.setPreferredWidth(50);
-        cntColumn.setPreferredWidth(30);
+        cntColumn.setPreferredWidth(25);
         contentPane.setLayout(null);
         contentPane.add(scrollPane);
         

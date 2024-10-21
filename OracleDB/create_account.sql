@@ -20,17 +20,25 @@ writer varchar2(20) not null,
 category varchar2(10) not null,
 id varchar2(20) not null);
 
-insert into book values ('12345','하울의 움직이는 성','무라카미 하루키','소설','2');
-insert into book values ('12346','하울의 움직이는 성','무라카미 하루키','소설','2');
-insert into book values ('12347','하울의 움직이는 성','무라카미 하루키','소설','2');
-insert into book values ('12348','하울의 움직이는 성','무라카미 하루키','소설','2');
-insert into book values ('12349','하울의 움직이는 성','무라카미 하루키','소설','2');
-insert into book values ('12350','하울의 움직이는 성','무라카미 하루키','소설','2');
+insert into book values ('9788936434120','소년이 온다','한강','소설','5');
+insert into book values ('9788936434595','채식주의자','한강','소설','3');
+insert into book values ('2090000151824','다시, 역사의쓸모','최태성','역사','4');
+insert into book values ('9788959897223','트렌드 코리아 2025','김난도 외 10명','경제','6');
+insert into book values ('9788932024639','서랍에 저녁을 넣어 두었다','한강','에세이','3');
+insert into book values ('9791194330424','넥서스','유발 하라리','인문','2');
+insert into book values ('9791198945617','이별이 어려운 너에게 전하는 말','지민석','에세이','4');
+insert into book values ('9791157847679','박태웅의 AI 강의 2025','박태웅','경제','4');
+insert into book values ('9788934985501','디바인 매트릭스, 느낌이 현실이 된다','그렉 브레이든','자기계발','1');
+insert into book values ('9791194033127','더 좋은 문장을 쓰고 싶은 당신을 위한 필사책','이주윤','인문','5');
+
+alter table book modify title varchar2(50);
+alter table loanlist modify title varchar2(50);
 
 select * from account;
 select * from loanlist;
 select * from book;
 
+delete book;
 delete loanlist;
 
 delete from account where id = 'asd';
