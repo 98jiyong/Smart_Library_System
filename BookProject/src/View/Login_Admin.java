@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -44,6 +45,8 @@ public class Login_Admin extends JFrame {
 	 */
 	public Login_Admin() {
 		setBounds(400, 300, 400, 300);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -87,19 +90,17 @@ public class Login_Admin extends JFrame {
 					String userPw = userdao.findPW(txtId.getText());
 					if(new String(passwordPw.getPassword()).equals(userPw)) {
 						if(userdao.isAuth(txtId.getText())) {
+							JOptionPane.showMessageDialog(null, "로그인 성공!","로그인 성공",JOptionPane.INFORMATION_MESSAGE);
 							setVisible(false);
 							mf.setVisible(false);
 						}else {
-							Notice_Failed_Auth ntcFailAuth = Notice_Failed_Auth.getInstance();
-							ntcFailAuth.setVisible(true);
+							JOptionPane.showMessageDialog(null, "관리자 권한이 없습니다.","로그인 실패",JOptionPane.ERROR_MESSAGE);
 						}
 					}else {
-						Notice_Failed_Pw ntcFailPw = Notice_Failed_Pw.getInstance();
-						ntcFailPw.setVisible(true);
+						JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다.","로그인 실패",JOptionPane.ERROR_MESSAGE);
 					}
 				}else {
-					Notice_Failed_Id ntcFailId = Notice_Failed_Id.getInstance();
-					ntcFailId.setVisible(true);
+					JOptionPane.showMessageDialog(null, "입력한 아이디가 없습니다.","로그인 실패",JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

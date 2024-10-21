@@ -52,6 +52,8 @@ public class Login_User extends JFrame {
 	 */
 	private Login_User() {
 		setBounds(400, 300, 400, 300);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -95,18 +97,18 @@ public class Login_User extends JFrame {
 				if(userdao.isinId(txtId.getText())) {
 					String userPw = userdao.findPW(txtId.getText());
 					if(new String(passwordPw.getPassword()).equals(userPw)) {
+						JOptionPane.showMessageDialog(null, "로그인 성공!","로그인 성공",JOptionPane.INFORMATION_MESSAGE);
 						setVisible(false);
 						mf.setVisible(false);
 						UserSelect us = UserSelect.getInstance(txtId.getText());
 						us.setVisible(true);
 					}else {
-						JOptionPane.showMessageDialog(null, "아이디 중복 체크를 진행해주세요.","아이디 체크",JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다.","로그인 실패",JOptionPane.ERROR_MESSAGE);
 //						Notice_Failed_Pw ntcFailPw = Notice_Failed_Pw.getInstance();
 //						ntcFailPw.setVisible(true);
 					}
 				}else {
-					Notice_Failed_Id ntcFailId = Notice_Failed_Id.getInstance();
-					ntcFailId.setVisible(true);
+					JOptionPane.showMessageDialog(null, "입력한 아이디가 없습니다.","로그인 실패",JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

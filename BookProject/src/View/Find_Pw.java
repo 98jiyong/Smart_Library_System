@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -40,6 +41,8 @@ public class Find_Pw extends JFrame {
 	 */
 	public Find_Pw() {
 		setBounds(400, 250, 400, 400);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -106,8 +109,7 @@ public class Find_Pw extends JFrame {
 					setVisible(false);
 					rPw.setVisible(true);
 				}else {
-					No_Pw nPw = new No_Pw(txtId.getText(), txtQuestionAnswer.getText());
-					nPw.setVisible(true);
+					JOptionPane.showMessageDialog(null, "잘못된 답변입니다.","비밀번호 찾기",JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

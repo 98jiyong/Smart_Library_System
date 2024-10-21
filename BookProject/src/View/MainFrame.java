@@ -49,6 +49,8 @@ public class MainFrame extends JFrame {
 	
 	private MainFrame() {
 		setBounds(300, 250, 600, 400);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("도서관리 프로그램\r\n");

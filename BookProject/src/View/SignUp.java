@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 //import javax.swing.JRadioButton;
@@ -58,6 +59,8 @@ public class SignUp extends JFrame {
 	 */
 	public SignUp() {
 		setBounds(400, 250, 400, 600);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -235,8 +238,7 @@ public class SignUp extends JFrame {
 				userdao.insert(userdto);
 				
 				setVisible(false);
-				Notice_Success ntcscs = Notice_Success.getInstance();
-				ntcscs.setVisible(true);
+				JOptionPane.showMessageDialog(null, "회원가입 성공!","회원가입",JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		

@@ -63,6 +63,37 @@ public class LoanDao {
 		}
 	}
 	
+	public ArrayList<LoanDto> select(String id, String keyword){
+		ArrayList<LoanDto> slist = new ArrayList<LoanDto>();
+		if(conn != null) {
+			try {
+				String sql = "select * from loanlist where id =? and title like ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				pstmt.setString(2, "%" + keyword + "%");
+				rs = pstmt.executeQuery();
+				while(rs.next()) {	
+					LoanDto searchTemp = new LoanDto();
+					searchTemp.setIsbn(rs.getString("isbn"));
+					searchTemp.setTitle(rs.getString("title"));
+					searchTemp.setWriter(rs.getString("writer"));
+					searchTemp.setCategory(rs.getString("category"));
+					slist.add(searchTemp);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try {
+					DBCL.close();
+				}catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}
+		return slist;
+	}
+	
 	public ArrayList<LoanDto> selectAll(String id){
 		ArrayList<LoanDto> llist = new ArrayList<LoanDto>();
 		if(conn != null) {
@@ -92,5 +123,34 @@ public class LoanDao {
 			}
 		}
 		return llist;
+	}
+	
+	public void delete(String isbn, String id) {
+		if(conn != null) {
+			try {
+				String sql = "delete from loanlist where isbn = ? and id = ? ";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, isbn);
+				pstmt.setString(2, id);
+				// 쿼리 실행
+				int result = pstmt.executeUpdate();
+				if(result == 0) {
+					conn.rollback();
+					System.out.println("결과에 의해 롤백 완료");
+				}else {
+					conn.commit();
+					System.out.println("결과에 의해 커밋 완료");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try {
+					DBCL.close();
+				}catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}
 	}
 }

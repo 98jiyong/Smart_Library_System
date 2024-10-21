@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
@@ -45,6 +46,8 @@ public class Reset_Pw extends JFrame {
 	 */
 	public Reset_Pw(String id) {
 		setBounds(400, 300, 400, 300);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -121,10 +124,14 @@ public class Reset_Pw extends JFrame {
 		
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				userdao.updatePW(new String (ResetPwCheck.getPassword()), id);
-				setVisible(false);
-				Notice_Success ntcscs = Notice_Success.getInstance();
-				ntcscs.setVisible(true);
+				if(new String(ResetPwCheck.getPassword()).equals(new String (ResetPw.getPassword()))) {
+					userdao.updatePW(new String (ResetPwCheck.getPassword()), id);
+					setVisible(false);
+					JOptionPane.showMessageDialog(null, "변경 성공!","비밀번호 변경",JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(null, "변경할 비밀번호가 일치하지 않습니다.","비밀번호 변경",JOptionPane.ERROR_MESSAGE);
+				}
+				
 			}
 		});
 	}

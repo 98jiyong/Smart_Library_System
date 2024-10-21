@@ -17,6 +17,8 @@ public class Result_Id extends JFrame {
 	
 	public Result_Id(String name, String tel) {
 		setBounds(450, 350, 300, 200);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -30,7 +32,7 @@ public class Result_Id extends JFrame {
 			lbResult.setText("ID가 없습니다.");
 		}
 		lbResult.setFont(new Font("굴림",Font.PLAIN, 20));
-		lbResult.setBounds(80, 60, 200, 30);
+		lbResult.setBounds(100, 60, 200, 30);
 		contentPane.add(lbResult);
 	}
 }

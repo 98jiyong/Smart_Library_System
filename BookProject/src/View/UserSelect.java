@@ -1,6 +1,5 @@
 package View;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,6 +45,8 @@ public class UserSelect extends JFrame {
 	private UserSelect(String id) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 300, 400, 300);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

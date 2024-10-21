@@ -31,6 +31,37 @@ public class BookDao {
 		return bookdao;
 	}
 	
+	public ArrayList<BookDto> select(String keyword){
+		ArrayList<BookDto> slist = new ArrayList<BookDto>();
+		if(conn != null) {
+			try {
+				String sql = "select * from book where title like ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%" + keyword + "%");
+				rs = pstmt.executeQuery();
+				while(rs.next()) {	
+					BookDto searchTemp = new BookDto();
+					searchTemp.setIsbn(rs.getString("isbn"));
+					searchTemp.setTitle(rs.getString("title"));
+					searchTemp.setWriter(rs.getString("writer"));
+					searchTemp.setCategory(rs.getString("category"));
+					searchTemp.setBookcnt(rs.getInt("bookcnt"));
+					slist.add(searchTemp);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try {
+					DBCL.close();
+				}catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}
+		return slist;
+	}
+	
 	public ArrayList<BookDto> selectAll(){
 		ArrayList<BookDto> blist = new ArrayList<BookDto>();
 		if(conn != null) {

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -62,6 +63,8 @@ public class CheckOut extends JFrame {
 	public CheckOut(String id) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(350, 300, 600, 400);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -69,8 +72,8 @@ public class CheckOut extends JFrame {
 		String[] header = {"고유번호","제목","저자","분야","권수"};
 		DefaultTableModel dtm = new DefaultTableModel(header, 0);
 		
-		ArrayList<BookDto> booklist = bookdao.selectAll();
-	    for (BookDto b : booklist) {
+		ArrayList<BookDto> bookList = bookdao.selectAll();
+	    for (BookDto b : bookList) {
 	        Object[] rowData = {
 	            b.getIsbn(),
 	            b.getTitle(),
@@ -81,7 +84,8 @@ public class CheckOut extends JFrame {
 	        dtm.addRow(rowData);
 	    }
 	    
-		JTable table = new JTable(dtm);
+		JTable table = new JTable();
+		table.setModel(dtm);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(40, 80, 500, 200);
@@ -139,6 +143,34 @@ public class CheckOut extends JFrame {
 			}
         });
         
+        btnSearch.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		DefaultTableModel model = new DefaultTableModel(header, 0);
+        		ArrayList<BookDto> searchList = bookdao.select(txtSearch.getText());
+        	    for (BookDto s : searchList) {
+        	        Object[] rowData = {
+        	            s.getIsbn(),
+        	            s.getTitle(),
+        	            s.getWriter(),
+        	            s.getCategory(),
+        	            s.getBookcnt()
+        	        };
+        	        model.addRow(rowData);
+        	    }
+        	    table.setModel(model);
+        		TableColumn isbnColumn = table.getColumnModel().getColumn(0);
+        		TableColumn titleColumn = table.getColumnModel().getColumn(1);
+        		TableColumn writerColumn = table.getColumnModel().getColumn(2);
+        		TableColumn categoryColumn = table.getColumnModel().getColumn(3); 
+        		TableColumn cntColumn = table.getColumnModel().getColumn(4);
+        		isbnColumn.setPreferredWidth(100);
+                titleColumn.setPreferredWidth(250);
+                writerColumn.setPreferredWidth(70);
+                categoryColumn.setPreferredWidth(50);
+                cntColumn.setPreferredWidth(25);
+        	}
+        });
+        
         btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
@@ -155,10 +187,18 @@ public class CheckOut extends JFrame {
 				loandto.setCategory(category);
 				loandto.setId(id);
 				loandao.insert(loandto);
-				Notice_Success ntcscs = Notice_Success.getInstance();
-				ntcscs.setVisible(true);
+				JOptionPane.showMessageDialog(null, "대출 성공!","도서 대출",JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		
+		/*
+		 * 도서 대출
+-> booklist에서 선택한 도서에 권수를 -1 업데이트
+	if 권수가 1이면 delete
+
+도서 반납
+-> loanlist에서 선택한 도서를 삭제
+	booklist에 조건에 맞는 도서에 권수를 +1 업데이트
+	if 권수가 0이면 insert
+		 */
 	}
 }

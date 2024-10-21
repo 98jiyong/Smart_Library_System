@@ -39,6 +39,8 @@ public class Find_Id extends JFrame {
 	public Find_Id() {
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 300, 400, 300);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

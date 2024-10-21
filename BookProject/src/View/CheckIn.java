@@ -3,11 +3,14 @@ package View;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -27,7 +30,9 @@ public class CheckIn extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtSearch;
+	private String isbn = null;
 	UserDto userdto = new UserDto();
+	LoanDto loandto = new LoanDto();
 	UserDao userdao = UserDao.getInstance();
 	LoanDao loandao = LoanDao.getInstance();
 	Login_User lgUser = Login_User.getInstance();
@@ -53,13 +58,15 @@ public class CheckIn extends JFrame {
 	public CheckIn(String id) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(350, 300, 600, 400);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
 		String[] header = {"고유번호","제목","저자","분야"};
-		DefaultTableModel dtm = new DefaultTableModel(header, 0);
 		
+		DefaultTableModel dtm = new DefaultTableModel(header, 0);
 		ArrayList<LoanDto> loanlist = loandao.selectAll(id);
 	    for (LoanDto l : loanlist) {
 	        Object[] rowData = {
@@ -72,7 +79,8 @@ public class CheckIn extends JFrame {
 	        dtm.addRow(rowData);
 	    }
 	    
-		JTable table = new JTable(dtm);
+		JTable table = new JTable();
+		table.setModel(dtm);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(40, 80, 500, 200);
@@ -118,6 +126,38 @@ public class CheckIn extends JFrame {
         btnSearch.setBounds(443, 40, 97, 30);
         contentPane.add(btnSearch);
         
+        table.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+    			int row = table.getSelectedRow();
+    			isbn = (String) table.getValueAt(row, 0);
+			}
+        });
+        
+        btnSearch.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		DefaultTableModel model = new DefaultTableModel(header, 0);
+        		ArrayList<LoanDto> searchList = loandao.select(id, txtSearch.getText());
+        	    for (LoanDto s : searchList) {
+        	        Object[] rowData = {
+        	            s.getIsbn(),
+        	            s.getTitle(),
+        	            s.getWriter(),
+        	            s.getCategory(),
+        	        };
+        	        model.addRow(rowData);
+        	    }
+        	    table.setModel(model);
+        		TableColumn isbnColumn = table.getColumnModel().getColumn(0);
+        		TableColumn titleColumn = table.getColumnModel().getColumn(1);
+        		TableColumn writerColumn = table.getColumnModel().getColumn(2);
+        		TableColumn categoryColumn = table.getColumnModel().getColumn(3); 
+        		isbnColumn.setPreferredWidth(100);
+                titleColumn.setPreferredWidth(250);
+                writerColumn.setPreferredWidth(100);
+                categoryColumn.setPreferredWidth(70);
+        	}
+        });
+        
         btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
@@ -125,6 +165,33 @@ public class CheckIn extends JFrame {
 				us.setVisible(true);
 			}
 		});
-		
+        
+        btnReturn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+				loandao.delete(isbn, id);
+				JOptionPane.showMessageDialog(null, "반납 성공!","도서 반납",JOptionPane.INFORMATION_MESSAGE);
+				DefaultTableModel model1 = new DefaultTableModel(header, 0);
+				ArrayList<LoanDto> loanlist = loandao.selectAll(id);
+			    for (LoanDto l : loanlist) {
+			        Object[] rowData = {
+			            l.getIsbn(),
+			            l.getTitle(),
+			            l.getWriter(),
+			            l.getCategory(),
+			            l.getId()
+			        };
+			        model1.addRow(rowData);
+			    }
+				table.setModel(model1);
+				TableColumn isbnColumn = table.getColumnModel().getColumn(0);
+        		TableColumn titleColumn = table.getColumnModel().getColumn(1);
+        		TableColumn writerColumn = table.getColumnModel().getColumn(2);
+        		TableColumn categoryColumn = table.getColumnModel().getColumn(3); 
+        		isbnColumn.setPreferredWidth(100);
+                titleColumn.setPreferredWidth(250);
+                writerColumn.setPreferredWidth(100);
+                categoryColumn.setPreferredWidth(70);
+        	}
+        });
 	}
 }
