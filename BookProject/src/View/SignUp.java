@@ -78,7 +78,7 @@ public class SignUp extends JFrame {
 		lbId.setBounds(12, 100, 100, 30);
 		contentPane.add(lbId);
 		
-		txtId = new JTextField();
+		txtId = new JTextField("");
 		txtId.setFont(new Font("굴림", Font.PLAIN, 20));
 		txtId.setBounds(110, 100, 120, 30);
 		contentPane.add(txtId);
@@ -141,29 +141,6 @@ public class SignUp extends JFrame {
 		txtTel.setColumns(10);
 		txtTel.setBounds(110, 400, 202, 30);
 		contentPane.add(txtTel);
-		
-//		JLabel lbAuthor = new JLabel("권한");
-//		lbAuthor.setFont(new Font("굴림", Font.PLAIN, 20));
-//		lbAuthor.setBounds(12, 450, 100, 30);
-//		contentPane.add(lbAuthor);
-		
-//		ButtonGroup group = new ButtonGroup();
-//		
-//		JRadioButton rdbtnUser = new JRadioButton("사용자");
-//		rdbtnUser.setHorizontalAlignment(SwingConstants.CENTER);
-//		rdbtnUser.setSelected(true);
-//		rdbtnUser.setFont(new Font("굴림", Font.PLAIN, 20));
-//		rdbtnUser.setBounds(110, 450, 100, 30);
-//		contentPane.add(rdbtnUser);
-//		
-//		JRadioButton rdbtnAdmin = new JRadioButton("관리자");
-//		rdbtnAdmin.setHorizontalAlignment(SwingConstants.CENTER);
-//		rdbtnAdmin.setFont(new Font("굴림", Font.PLAIN, 20));
-//		rdbtnAdmin.setBounds(220, 450, 100, 30);
-//		contentPane.add(rdbtnAdmin);
-//		
-//		group.add(rdbtnUser);
-//		group.add(rdbtnAdmin);
 
 		JButton btnSignUp = new JButton("회원가입");
 		btnSignUp.setFont(new Font("굴림", Font.PLAIN, 25));
@@ -227,30 +204,32 @@ public class SignUp extends JFrame {
 				userdto.setPwHint(pwHint);
 				userdto.setTel(tel);
 				userdto.setAuth(auth);
-//				if(rdbtnAdmin.isSelected()) {
-//					String auth = "y";
-//					userdto.setAuth(auth);
-//				}else {
-//					String auth = "n";
-//					userdto.setAuth(auth);
-//				}
 				
-				userdao.insert(userdto);
-				
-				setVisible(false);
-				JOptionPane.showMessageDialog(null, "회원가입 성공!","회원가입",JOptionPane.INFORMATION_MESSAGE);
+				if(id.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "아이디를 입력해주세요.","회원가입 실패",JOptionPane.ERROR_MESSAGE);
+				}else {
+					if(name.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "이름을 입력해주세요.","회원가입 실패",JOptionPane.ERROR_MESSAGE);
+					}else {
+						if(pw.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "비밀번호를 입력해주세요.","회원가입 실패",JOptionPane.ERROR_MESSAGE);
+						}else {
+							if(pwHint.isEmpty()) {
+								JOptionPane.showMessageDialog(null, "비밀번호 힌트를 입력해주세요.","회원가입 실패",JOptionPane.ERROR_MESSAGE);
+							}else {
+								if(tel.isEmpty()) {
+									JOptionPane.showMessageDialog(null, "전화번호를 입력해주세요.","회원가입 실패",JOptionPane.ERROR_MESSAGE);
+								}else {
+									userdao.insert(userdto);
+									setVisible(false);
+									JOptionPane.showMessageDialog(null, "회원가입 성공!","회원가입",JOptionPane.INFORMATION_MESSAGE);
+								}
+							}
+						}
+					}
+				}
 			}
 		});
 		
 	}
-	
-//	private boolean dpCheck(String checkId) {
-//		ArrayList<UserDto> ulist = userdao.selectAll();
-//		for(UserDto tempu : ulist) {
-//			if(checkId.equals(tempu.getId())){
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
 }

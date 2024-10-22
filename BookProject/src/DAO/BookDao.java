@@ -135,6 +135,35 @@ public class BookDao {
 		return blist;
 	}
 	
+	public void update(String isbn, int bookcnt) {
+		if(conn != null) {
+			try {
+				String sql = "update book set bookcnt = ? where isbn = ? ";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, bookcnt);
+				pstmt.setString(2, isbn);
+				// 쿼리 실행
+				int result = pstmt.executeUpdate();
+				if(result == 0) {
+					conn.rollback();
+					System.out.println("결과에 의해 롤백 완료");
+				}else {
+					conn.commit();
+					System.out.println("결과에 의해 커밋 완료");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try {
+					DBCL.close();
+				}catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}
+	}
+	
 	public void delete(String isbn) {
 		if(conn != null) {
 			try {

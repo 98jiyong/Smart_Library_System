@@ -93,6 +93,8 @@ public class Login_Admin extends JFrame {
 							JOptionPane.showMessageDialog(null, "로그인 성공!","로그인 성공",JOptionPane.INFORMATION_MESSAGE);
 							setVisible(false);
 							mf.setVisible(false);
+							AdminSelect as = AdminSelect.getInstance(txtId.getText());
+							as.setVisible(true);
 						}else {
 							JOptionPane.showMessageDialog(null, "관리자 권한이 없습니다.","로그인 실패",JOptionPane.ERROR_MESSAGE);
 						}
