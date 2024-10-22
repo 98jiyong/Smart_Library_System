@@ -23,7 +23,7 @@ id varchar2(20) not null);
 insert into book values ('9788936434120','¼Ò³âÀÌ ¿Â´Ù','ÇÑ°­','¼Ò¼³','5');
 insert into book values ('9788936434595','Ã¤½ÄÁÖÀÇÀÚ','ÇÑ°­','¼Ò¼³','3');
 insert into book values ('2090000151824','´Ù½Ã, ¿ª»çÀÇ¾µ¸ğ','ÃÖÅÂ¼º','¿ª»ç','4');
-insert into book values ('9788959897223','Æ®·»µå ÄÚ¸®¾Æ 2025','±è³­µµ ¿Ü 10¸í','°æÁ¦','6');
+insert into book values ('9788959897223','Æ®·»µå ÄÚ¸®¾Æ 2025','±è³­µµ ¿Ü 10¸í','°æÁ¦','10');
 insert into book values ('9788932024639','¼­¶ø¿¡ Àú³áÀ» ³Ö¾î µÎ¾ú´Ù','ÇÑ°­','¿¡¼¼ÀÌ','3');
 insert into book values ('9791194330424','³Ø¼­½º','À¯¹ß ÇÏ¶ó¸®','ÀÎ¹®','2');
 insert into book values ('9791198945617','ÀÌº°ÀÌ ¾î·Á¿î ³Ê¿¡°Ô ÀüÇÏ´Â ¸»','Áö¹Î¼®','¿¡¼¼ÀÌ','4');
@@ -33,14 +33,17 @@ insert into book values ('9791194033127','´õ ÁÁÀº ¹®ÀåÀ» ¾²°í ½ÍÀº ´ç½ÅÀ» À§ÇÑ Ç
 
 alter table book modify title varchar2(50);
 alter table loanlist modify title varchar2(50);
+alter table loanlist add bookcnt number(2) not null; 
 
 select * from account;
 select * from loanlist;
 select * from book;
 
+desc loanlist;
+
 delete book;
 delete loanlist;
-
+delete from book where isbn = '9788959897223';
 delete from account where id = 'asd';
 update account set pwhint = '±èÃ¶±â' where id = 'abc123';
 

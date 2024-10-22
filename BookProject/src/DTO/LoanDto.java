@@ -7,7 +7,14 @@ public class LoanDto {
 	private String writer = null;
 	private String category = null;
 	private String id = null;
+	private int bookcnt = 0;
 	
+	public int getBookcnt() {
+		return bookcnt;
+	}
+	public void setBookcnt(int bookcnt) {
+		this.bookcnt = bookcnt;
+	}
 	public String getIsbn() {
 		return isbn;
 	}

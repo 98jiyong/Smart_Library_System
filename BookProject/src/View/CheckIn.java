@@ -18,8 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
+import DAO.BookDao;
 import DAO.LoanDao;
 import DAO.UserDao;
 import DTO.LoanDto;
@@ -30,10 +30,16 @@ public class CheckIn extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtSearch;
+	private int row = 0;
 	private String isbn = null;
+	private String title = null;
+	private String writer = null;
+	private String category = null;
+	private int bookcnt = 0;
 	UserDto userdto = new UserDto();
 	LoanDto loandto = new LoanDto();
 	UserDao userdao = UserDao.getInstance();
+	BookDao bookdao = BookDao.getInstance();
 	LoanDao loandao = LoanDao.getInstance();
 	Login_User lgUser = Login_User.getInstance();
 	/**
@@ -64,7 +70,7 @@ public class CheckIn extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		String[] header = {"고유번호","제목","저자","분야"};
+		String[] header = {"고유번호","제목","저자","분야","수량"};
 		
 		DefaultTableModel dtm = new DefaultTableModel(header, 0);
 		ArrayList<LoanDto> loanlist = loandao.selectAll(id);
@@ -74,7 +80,7 @@ public class CheckIn extends JFrame {
 	            l.getTitle(),
 	            l.getWriter(),
 	            l.getCategory(),
-	            l.getId()
+	            l.getBookcnt()
 	        };
 	        dtm.addRow(rowData);
 	    }
@@ -84,14 +90,11 @@ public class CheckIn extends JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(40, 80, 500, 200);
-		TableColumn isbnColumn = table.getColumnModel().getColumn(0);
-		TableColumn titleColumn = table.getColumnModel().getColumn(1);
-		TableColumn writerColumn = table.getColumnModel().getColumn(2);
-		TableColumn categoryColumn = table.getColumnModel().getColumn(3); 
-		isbnColumn.setPreferredWidth(100);
-        titleColumn.setPreferredWidth(250);
-        writerColumn.setPreferredWidth(100);
-        categoryColumn.setPreferredWidth(70);
+		table.getColumnModel().getColumn(0).setPreferredWidth(100);
+		table.getColumnModel().getColumn(1).setPreferredWidth(250);
+		table.getColumnModel().getColumn(2).setPreferredWidth(70);
+		table.getColumnModel().getColumn(3).setPreferredWidth(50); 
+		table.getColumnModel().getColumn(4).setPreferredWidth(25);
         contentPane.setLayout(null);
         contentPane.add(scrollPane);
         
@@ -128,8 +131,12 @@ public class CheckIn extends JFrame {
         
         table.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
-    			int row = table.getSelectedRow();
+    			row = table.getSelectedRow();
     			isbn = (String) table.getValueAt(row, 0);
+    			title = (String) table.getValueAt(row, 1);
+    			writer = (String) table.getValueAt(row, 2);
+    			category = (String) table.getValueAt(row, 3);
+    			bookcnt = (int) table.getValueAt(row, 4);
 			}
         });
         
@@ -143,18 +150,16 @@ public class CheckIn extends JFrame {
         	            s.getTitle(),
         	            s.getWriter(),
         	            s.getCategory(),
+        	            s.getBookcnt()
         	        };
         	        model.addRow(rowData);
         	    }
         	    table.setModel(model);
-        		TableColumn isbnColumn = table.getColumnModel().getColumn(0);
-        		TableColumn titleColumn = table.getColumnModel().getColumn(1);
-        		TableColumn writerColumn = table.getColumnModel().getColumn(2);
-        		TableColumn categoryColumn = table.getColumnModel().getColumn(3); 
-        		isbnColumn.setPreferredWidth(100);
-                titleColumn.setPreferredWidth(250);
-                writerColumn.setPreferredWidth(100);
-                categoryColumn.setPreferredWidth(70);
+        		table.getColumnModel().getColumn(0).setPreferredWidth(100);
+        		table.getColumnModel().getColumn(1).setPreferredWidth(250);
+        		table.getColumnModel().getColumn(2).setPreferredWidth(70);
+        		table.getColumnModel().getColumn(3).setPreferredWidth(50); 
+        		table.getColumnModel().getColumn(4).setPreferredWidth(25);
         	}
         });
         
@@ -168,29 +173,28 @@ public class CheckIn extends JFrame {
         
         btnReturn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-				loandao.delete(isbn, id);
+//        		loandao.delete(isbn, id);
+				loandao.bookSub(isbn, id, bookcnt);
+				bookdao.bookAdd(isbn, title, writer, category);
 				JOptionPane.showMessageDialog(null, "반납 성공!","도서 반납",JOptionPane.INFORMATION_MESSAGE);
 				DefaultTableModel model1 = new DefaultTableModel(header, 0);
 				ArrayList<LoanDto> loanlist = loandao.selectAll(id);
-			    for (LoanDto l : loanlist) {
-			        Object[] rowData = {
-			            l.getIsbn(),
-			            l.getTitle(),
-			            l.getWriter(),
-			            l.getCategory(),
-			            l.getId()
-			        };
-			        model1.addRow(rowData);
-			    }
+				for (LoanDto l : loanlist) {
+					Object[] rowData = {
+							l.getIsbn(),
+							l.getTitle(),
+							l.getWriter(),
+							l.getCategory(),
+							l.getBookcnt()
+					};
+					model1.addRow(rowData);
+				}
 				table.setModel(model1);
-				TableColumn isbnColumn = table.getColumnModel().getColumn(0);
-        		TableColumn titleColumn = table.getColumnModel().getColumn(1);
-        		TableColumn writerColumn = table.getColumnModel().getColumn(2);
-        		TableColumn categoryColumn = table.getColumnModel().getColumn(3); 
-        		isbnColumn.setPreferredWidth(100);
-                titleColumn.setPreferredWidth(250);
-                writerColumn.setPreferredWidth(100);
-                categoryColumn.setPreferredWidth(70);
+				table.getColumnModel().getColumn(0).setPreferredWidth(100);
+				table.getColumnModel().getColumn(1).setPreferredWidth(250);
+				table.getColumnModel().getColumn(2).setPreferredWidth(70);
+				table.getColumnModel().getColumn(3).setPreferredWidth(50); 
+				table.getColumnModel().getColumn(4).setPreferredWidth(25);
         	}
         });
 	}

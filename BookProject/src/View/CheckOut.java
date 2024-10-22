@@ -18,7 +18,6 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 import DAO.BookDao;
 import DAO.LoanDao;
@@ -32,10 +31,12 @@ public class CheckOut extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtSearch;
+	private int row = 0;
 	private String isbn = null;
 	private String title = null;
 	private String writer = null;
 	private String category = null;
+	private int bookcnt = 0;
 	UserDto userdto = new UserDto();
 	LoanDto loandto = new LoanDto();
 	BookDao bookdao = BookDao.getInstance();
@@ -69,7 +70,7 @@ public class CheckOut extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		String[] header = {"고유번호","제목","저자","분야","권수"};
+		String[] header = {"고유번호","제목","저자","분야","수량"};
 		DefaultTableModel dtm = new DefaultTableModel(header, 0);
 		
 		ArrayList<BookDto> bookList = bookdao.selectAll();
@@ -89,16 +90,11 @@ public class CheckOut extends JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(40, 80, 500, 200);
-		TableColumn isbnColumn = table.getColumnModel().getColumn(0);
-		TableColumn titleColumn = table.getColumnModel().getColumn(1);
-		TableColumn writerColumn = table.getColumnModel().getColumn(2);
-		TableColumn categoryColumn = table.getColumnModel().getColumn(3); 
-		TableColumn cntColumn = table.getColumnModel().getColumn(4);
-		isbnColumn.setPreferredWidth(100);
-        titleColumn.setPreferredWidth(250);
-        writerColumn.setPreferredWidth(70);
-        categoryColumn.setPreferredWidth(50);
-        cntColumn.setPreferredWidth(25);
+		table.getColumnModel().getColumn(0).setPreferredWidth(100);;
+		table.getColumnModel().getColumn(1).setPreferredWidth(250);
+		table.getColumnModel().getColumn(2).setPreferredWidth(70);
+		table.getColumnModel().getColumn(3).setPreferredWidth(50); 
+		table.getColumnModel().getColumn(4).setPreferredWidth(25);
         contentPane.setLayout(null);
         contentPane.add(scrollPane);
         
@@ -135,17 +131,18 @@ public class CheckOut extends JFrame {
         
         table.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
-    			int row = table.getSelectedRow();
+    			row = table.getSelectedRow();
     			isbn = (String) table.getValueAt(row, 0);
     			title = (String) table.getValueAt(row, 1);
     			writer = (String) table.getValueAt(row, 2);
     			category = (String) table.getValueAt(row, 3);
+    			bookcnt = (int) table.getValueAt(row, 4);
 			}
         });
         
         btnSearch.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		DefaultTableModel model = new DefaultTableModel(header, 0);
+        		DefaultTableModel model1 = new DefaultTableModel(header, 0);
         		ArrayList<BookDto> searchList = bookdao.select(txtSearch.getText());
         	    for (BookDto s : searchList) {
         	        Object[] rowData = {
@@ -155,19 +152,14 @@ public class CheckOut extends JFrame {
         	            s.getCategory(),
         	            s.getBookcnt()
         	        };
-        	        model.addRow(rowData);
+        	        model1.addRow(rowData);
         	    }
-        	    table.setModel(model);
-        		TableColumn isbnColumn = table.getColumnModel().getColumn(0);
-        		TableColumn titleColumn = table.getColumnModel().getColumn(1);
-        		TableColumn writerColumn = table.getColumnModel().getColumn(2);
-        		TableColumn categoryColumn = table.getColumnModel().getColumn(3); 
-        		TableColumn cntColumn = table.getColumnModel().getColumn(4);
-        		isbnColumn.setPreferredWidth(100);
-                titleColumn.setPreferredWidth(250);
-                writerColumn.setPreferredWidth(70);
-                categoryColumn.setPreferredWidth(50);
-                cntColumn.setPreferredWidth(25);
+        	    table.setModel(model1);
+        		table.getColumnModel().getColumn(0).setPreferredWidth(100);;
+        		table.getColumnModel().getColumn(1).setPreferredWidth(250);
+        		table.getColumnModel().getColumn(2).setPreferredWidth(70);
+        		table.getColumnModel().getColumn(3).setPreferredWidth(50); 
+        		table.getColumnModel().getColumn(4).setPreferredWidth(25);
         	}
         });
         
@@ -181,24 +173,34 @@ public class CheckOut extends JFrame {
         
         btnLoan.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-				loandto.setIsbn(isbn);
-				loandto.setTitle(title);
-				loandto.setWriter(writer);
-				loandto.setCategory(category);
-				loandto.setId(id);
-				loandao.insert(loandto);
-				JOptionPane.showMessageDialog(null, "대출 성공!","도서 대출",JOptionPane.INFORMATION_MESSAGE);
+        		loandto.setIsbn(isbn);
+    			loandto.setTitle(title);
+    			loandto.setWriter(writer);
+    			loandto.setCategory(category);
+    			loandto.setId(id);
+    			loandto.setBookcnt(bookcnt);
+    			loandao.insert(loandto);
+    			bookdao.bookSub(isbn, bookcnt);
+    			JOptionPane.showMessageDialog(null, "대출 성공!","도서 대출",JOptionPane.INFORMATION_MESSAGE);
+    			DefaultTableModel model2 = new DefaultTableModel(header, 0);
+    			ArrayList<BookDto> searchList = bookdao.select(txtSearch.getText());
+    			for (BookDto s : searchList) {
+    				Object[] rowData = {
+    						s.getIsbn(),
+    						s.getTitle(),
+    						s.getWriter(),
+    						s.getCategory(),
+    						s.getBookcnt()
+    				};
+    				model2.addRow(rowData);
+    			}
+    			table.setModel(model2);
+    			table.getColumnModel().getColumn(0).setPreferredWidth(100);
+    			table.getColumnModel().getColumn(1).setPreferredWidth(250);
+    			table.getColumnModel().getColumn(2).setPreferredWidth(70);
+    			table.getColumnModel().getColumn(3).setPreferredWidth(50); 
+    			table.getColumnModel().getColumn(4).setPreferredWidth(25);
 			}
 		});
-		/*
-		 * 도서 대출
--> booklist에서 선택한 도서에 권수를 -1 업데이트
-	if 권수가 1이면 delete
-
-도서 반납
--> loanlist에서 선택한 도서를 삭제
-	booklist에 조건에 맞는 도서에 권수를 +1 업데이트
-	if 권수가 0이면 insert
-		 */
 	}
 }
