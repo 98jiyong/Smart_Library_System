@@ -53,12 +53,12 @@ public class UserSelect extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnLoan = new JButton("대출");
+		JButton btnLoan = new JButton("<html>도서<br>대출</html>");
 		btnLoan.setFont(new Font("굴림", Font.BOLD, 30));
 		btnLoan.setBounds(50, 75, 120, 100);
 		contentPane.add(btnLoan);
 		
-		JButton btnReturn = new JButton("반납");
+		JButton btnReturn = new JButton("<html>도서<br>반납</html>");
 		btnReturn.setFont(new Font("굴림", Font.BOLD, 30));
 		btnReturn.setBounds(220, 75, 120, 100);
 		contentPane.add(btnReturn);
