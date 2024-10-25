@@ -101,9 +101,9 @@ public class CheckIn extends JFrame {
 		scrollPane.setBounds(50, 140, 500, 200);
 		table.getColumnModel().getColumn(0).setPreferredWidth(100);
 		table.getColumnModel().getColumn(1).setPreferredWidth(250);
-		table.getColumnModel().getColumn(2).setPreferredWidth(70);
+		table.getColumnModel().getColumn(2).setPreferredWidth(60);
 		table.getColumnModel().getColumn(3).setPreferredWidth(50); 
-		table.getColumnModel().getColumn(4).setPreferredWidth(25);
+		table.getColumnModel().getColumn(4).setPreferredWidth(35);
         contentPane.setLayout(null);
         contentPane.add(scrollPane);
         
@@ -166,9 +166,9 @@ public class CheckIn extends JFrame {
         	    table.setModel(model);
         		table.getColumnModel().getColumn(0).setPreferredWidth(100);
         		table.getColumnModel().getColumn(1).setPreferredWidth(250);
-        		table.getColumnModel().getColumn(2).setPreferredWidth(70);
+        		table.getColumnModel().getColumn(2).setPreferredWidth(60);
         		table.getColumnModel().getColumn(3).setPreferredWidth(50); 
-        		table.getColumnModel().getColumn(4).setPreferredWidth(25);
+        		table.getColumnModel().getColumn(4).setPreferredWidth(35);
         	}
         });
         
@@ -182,7 +182,6 @@ public class CheckIn extends JFrame {
         
         btnReturn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-//        		loandao.delete(isbn, id);
 				loandao.bookSub(isbn, id, bookcnt);
 				bookdao.bookAdd(isbn, title, writer, category);
 				JOptionPane.showMessageDialog(null, "반납 성공!","도서 반납",JOptionPane.INFORMATION_MESSAGE);
@@ -201,9 +200,9 @@ public class CheckIn extends JFrame {
 				table.setModel(model1);
 				table.getColumnModel().getColumn(0).setPreferredWidth(100);
 				table.getColumnModel().getColumn(1).setPreferredWidth(250);
-				table.getColumnModel().getColumn(2).setPreferredWidth(70);
+				table.getColumnModel().getColumn(2).setPreferredWidth(60);
 				table.getColumnModel().getColumn(3).setPreferredWidth(50); 
-				table.getColumnModel().getColumn(4).setPreferredWidth(25);
+				table.getColumnModel().getColumn(4).setPreferredWidth(35);
         	}
         });
 	}

@@ -18,7 +18,6 @@ public class BookDao {
 	private ResultSet rs = null;
 	public static BookDao bookdao = null;
 	private Connection conn = null;
-//	private int bookcnt = 0;
 	
 	private BookDao() {
 		DBCN.init();
@@ -219,7 +218,6 @@ public class BookDao {
 		if(conn != null) {
 			try {
 				String sql = null;
-//				bookcnt = bookdao.findBookCnt(isbn);
 				if(bookdao.isin(isbn)) {
 					sql = "update book set bookcnt = bookcnt + ? where isbn = ?";
 					pstmt = conn.prepareStatement(sql);

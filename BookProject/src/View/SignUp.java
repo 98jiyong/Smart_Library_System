@@ -8,16 +8,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-//import java.awt.event.MouseListener;
 
-//import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-//import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -197,14 +194,12 @@ public class SignUp extends JFrame {
 				String pw = new String(txtPassword.getPassword());
 				String pwHint = txtQuestion.getText();
 				String tel = txtTel.getText();
-				
 				userdto.setId(id);
 				userdto.setName(name);
 				userdto.setPw(pw);
 				userdto.setPwHint(pwHint);
 				userdto.setTel(tel);
 				userdto.setAuth(auth);
-				
 				if(id.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "아이디를 입력해주세요.","회원가입 실패",JOptionPane.ERROR_MESSAGE);
 				}else {

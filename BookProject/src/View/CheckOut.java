@@ -101,9 +101,9 @@ public class CheckOut extends JFrame {
 		scrollPane.setBounds(50, 140, 500, 200);
 		table.getColumnModel().getColumn(0).setPreferredWidth(100);;
 		table.getColumnModel().getColumn(1).setPreferredWidth(250);
-		table.getColumnModel().getColumn(2).setPreferredWidth(70);
+		table.getColumnModel().getColumn(2).setPreferredWidth(60);
 		table.getColumnModel().getColumn(3).setPreferredWidth(50); 
-		table.getColumnModel().getColumn(4).setPreferredWidth(25);
+		table.getColumnModel().getColumn(4).setPreferredWidth(35);
         contentPane.setLayout(null);
         contentPane.add(scrollPane);
         
@@ -166,9 +166,9 @@ public class CheckOut extends JFrame {
         	    table.setModel(model1);
         		table.getColumnModel().getColumn(0).setPreferredWidth(100);;
         		table.getColumnModel().getColumn(1).setPreferredWidth(250);
-        		table.getColumnModel().getColumn(2).setPreferredWidth(70);
+        		table.getColumnModel().getColumn(2).setPreferredWidth(60);
         		table.getColumnModel().getColumn(3).setPreferredWidth(50); 
-        		table.getColumnModel().getColumn(4).setPreferredWidth(25);
+        		table.getColumnModel().getColumn(4).setPreferredWidth(35);
         	}
         });
         
@@ -206,9 +206,9 @@ public class CheckOut extends JFrame {
     			table.setModel(model2);
     			table.getColumnModel().getColumn(0).setPreferredWidth(100);
     			table.getColumnModel().getColumn(1).setPreferredWidth(250);
-    			table.getColumnModel().getColumn(2).setPreferredWidth(70);
+    			table.getColumnModel().getColumn(2).setPreferredWidth(60);
     			table.getColumnModel().getColumn(3).setPreferredWidth(50); 
-    			table.getColumnModel().getColumn(4).setPreferredWidth(25);
+    			table.getColumnModel().getColumn(4).setPreferredWidth(35);
 			}
 		});
 	}

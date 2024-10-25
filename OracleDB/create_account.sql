@@ -15,10 +15,13 @@ bookcnt NUMBER(2) not null);
 
 create table loanlist(
 isbn varchar2(20) not null,
-title varchar2(20) not null,
+title varchar2(50) not null,
 writer varchar2(20) not null,
 category varchar2(10) not null,
-id varchar2(20) not null);
+id varchar2(20) not null,
+bookcnt number(2) not null,
+constraint fk_isbn foreign key(isbn) references book(isbn) on delete cascade,
+constraint fk_id foreign key(id) references account(id) on delete cascade);
 
 insert into book values ('9788936434120','소년이 온다','한강','소설','5');
 insert into book values ('9788936434595','채식주의자','한강','소설','3');
@@ -40,13 +43,16 @@ select * from account;
 select * from loanlist;
 select * from book;
 
+drop table loanlist;
+insert into loanlist values('9791168342286','그거 사전','홍성윤','인문','test','2');
+desc account;
 desc book;
 desc loanlist;
 
 delete book;
 delete loanlist;
 
-delete from book where isbn = '9788959897223';
+delete from book where isbn = '9791168342286';
 delete from account where id = 'asd';
 update account set auth = 'y' where id = 'admin';
 

@@ -88,9 +88,9 @@ public class BookSelect extends JFrame {
 		scrollPane.setBounds(17, 100, 550, 200);
 		table.getColumnModel().getColumn(0).setPreferredWidth(100);;
 		table.getColumnModel().getColumn(1).setPreferredWidth(250);
-		table.getColumnModel().getColumn(2).setPreferredWidth(70);
+		table.getColumnModel().getColumn(2).setPreferredWidth(60);
 		table.getColumnModel().getColumn(3).setPreferredWidth(50); 
-		table.getColumnModel().getColumn(4).setPreferredWidth(25);
+		table.getColumnModel().getColumn(4).setPreferredWidth(35);
         contentPane.setLayout(null);
         contentPane.add(scrollPane);
         
