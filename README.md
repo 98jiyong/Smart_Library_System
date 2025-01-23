@@ -10,7 +10,7 @@
 1. [🖥️ 프로젝트 개요](#%EF%B8%8F-프로젝트-개요)
 2. [📕 주요기능](#-주요기능)
 3. [📖 요구사항 정의서 및 개발일정](#-요구사항-정의서-및-개발일정)
-4. [🏗️ E-R Model & ERD](#%EF%B8%8F-erd)
+4. [🏗️ E-R Model & ERD](#%EF%B8%8F-e-r-model--erd)
 5. [🔧 프로토타입](#-프로토타입)
 6. [📽️ 시연영상](#%EF%B8%8F-시연영상)
 7. [🗃️ 발표자료](#%EF%B8%8F-발표자료)
@@ -93,56 +93,20 @@
 <details>
   <summary><b>1. 사용자</b> (👈 Click)</summary>
   <br>
-  <markdown-accessiblity-table data-catalyst=""><table>
-<thead>
-<tr>
-<th align="center">회원가입 기능</th>
-<th align="center">로그인 기능</th>
-<th align="center">비밀번호변경 기능</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><img src="https://github.com/user-attachments/assets/2e4174dd-9120-4a6f-b9b1-8ab93c4fa950">
-</td>
-<td><img src="https://github.com/user-attachments/assets/6c9157ae-3fea-4ccb-8a72-d2d897050fe0"></td>
-<td><img src="https://github.com/user-attachments/assets/09518fe6-734c-4fa6-a554-cf2d67f238c9"></td>
-</tr>
-</tbody>
-</table></markdown-accessiblity-table>
-<markdown-accessiblity-table data-catalyst=""><table>
-<thead>
-<tr>
-<th align="center">검진등록 기능</th>
-<th align="center">결과보기 기능</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><img src="https://github.com/user-attachments/assets/fbcfccc2-2642-415d-9db1-674f22840b5c"></td>
-<td><img src="https://github.com/user-attachments/assets/71a24811-56cb-4aea-a69b-cd87d5084958"></td>
-</tr>
-</tbody>
-</table></markdown-accessiblity-table>
-</details>
 
+  | 회원가입 | ID 찾기 | PW 찾기 | 
+  |:---:|:---:|:---:|
+  | <img src="https://github.com/user-attachments/assets/9c5907c6-906a-4add-89f8-163ec2eea4ec" width="300" alt="회원가입"> | <img src="https://github.com/user-attachments/assets/5f371dca-caf7-4a45-950f-5cfed72e9070" width="300" alt="ID 찾기">  | <img src="https://github.com/user-attachments/assets/9ee878c8-a531-4d26-bbb4-d8e50da9b7c8" width="300" alt="PW 찾기"> |
+
+  | 로그인 | 도서 대출 | 도서 반납 | 
+  |:---:|:---:|:---:|
+  | <img src="https://github.com/user-attachments/assets/d7d64e77-137b-434a-9910-399c4743bbbe" width="300" alt="로그인"> | <img src="https://github.com/user-attachments/assets/e0b7ee74-544c-49c7-bbe2-4b738eb2ab17" width="300" alt="도서 대출">  | <img src="https://github.com/user-attachments/assets/4bfb0289-2659-418d-89b6-151111f88e56" width="300" alt="도서 반납"> |
+
+</details>
 <details>
   <summary><b>2. 관리자</b> (👈 Click)</summary>
   <br>
-  <markdown-accessiblity-table data-catalyst=""><table>
-  <thead>
-  <tr>
-  <th align="center">검진등록 기능</th>
-  <th align="center">결과보기 기능</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-  <td><img src="https://github.com/user-attachments/assets/fbcfccc2-2642-415d-9db1-674f22840b5c"></td>
-  <td><img src="https://github.com/user-attachments/assets/71a24811-56cb-4aea-a69b-cd87d5084958"></td>
-  </tr>
-  </tbody>
-  </table></markdown-accessiblity-table>
+
   | 로그인 | 도서 등록 | 
   |:---:|:---:|
   | <img src="https://github.com/user-attachments/assets/831184b3-acf1-4682-afb7-5cacabad3311" width="300" alt="로그인"> | <img src="https://github.com/user-attachments/assets/aae5f0bb-81d7-48fd-bc9f-19a88eedbbdb" width="300" alt="도서 등록">  |
