@@ -45,7 +45,7 @@
   - **개발 툴**: Eclipse, SQLPlus, SqlDeveloper
   - **형상 관리**: Github
 
-### 기술 구현
+### 🔨기술 구현
 <ol>
   <li>
     GUI 제작
