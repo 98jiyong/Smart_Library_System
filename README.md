@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="https://github.com/user-attachments/assets/42f7e699-960c-4130-93b4-e8f70d2e04b0" alt="SLS" width="400">
+  <img src="https://github.com/user-attachments/assets/42f7e699-960c-4130-93b4-e8f70d2e04b0" alt="SLS" width="300">
   <br>
   스마트 도서관리 시스템
   <br>
